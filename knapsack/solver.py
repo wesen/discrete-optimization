@@ -110,7 +110,8 @@ def solve_it(input_data):
             if k >= items[j].weight:
                 v1, w1, t1 = recurse_dp(k - items[j].weight, j - 1)
                 v1 += items[j].value
-                t1.append(j)
+                w1 += items[j].weight
+                t1 = t1 + [j]
 
                 v2, w2, t2 = recurse_dp(k, j - 1)
 
@@ -129,6 +130,8 @@ def solve_it(input_data):
         values = np.zeros((len(items) + 1, capacity+1), dtype=np.uint32)
 
         for k in range(capacity+1):
+            if k % 1000 == 0:
+                print("k: {}/{}".format(k, capacity))
             for i in range(len(items)):
                 if items[i].weight <= k:
                     v1 = values[i, k]
@@ -158,22 +161,24 @@ def solve_it(input_data):
     # value_greedy_value, weight, taken = algo_greedy_value()
     # value_greedy_value_ratio, weight, taken = algo_greedy_value_ratio()
 
-    value_dp_1, weight_dp_1, taken_dp_1 = algo_dp_one()
-    taken = [0] * len(items)
-    for i in taken_dp_1:
-        taken[i] = 1
+    # value_dp_1, weight_dp_1, taken_dp_1 = algo_dp_one()
+    # taken = [0] * len(items)
+    # # print(taken_dp_1)
+    # for i in taken_dp_1:
+    #     taken[i] = 1
+    # # print(value_dp_1, weight_dp_1, taken)
 
-    max_value = value_dp_1
+    # max_value = value_dp_1
 
     # print(value_dp_1, taken)
     #
     # for i in items:
     #     print(i)
 
-    # value_dp_2, weight_dp_2, taken_dp_2 = algo_dp_two()
-    # print(value_dp_2, weight_dp_2, taken_dp_2)
-    # max_value = value_dp_2
-    # taken = taken_dp_2
+    value_dp_2, weight_dp_2, taken_dp_2 = algo_dp_two()
+    print(value_dp_2, weight_dp_2, taken_dp_2)
+    max_value = value_dp_2
+    taken = taken_dp_2
 
     # max_value = max([value_naive, value_greedy_value, value_greedy_value_ratio, value_dp_1])
 
